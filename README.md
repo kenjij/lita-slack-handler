@@ -1,7 +1,7 @@
 # lita-slack-handler
 
-**lita-hipchat-handler** is a handler for [Lita](https://github.com/jimmycuadra/lita) that allows you to use the robot with [Slack](https://slack.com/). This handler complements [lita-slack](https://github.com/kenjij/lita-slack) adapter gem.
-**lita-hipchat-handler** sets up an HTTP route to accept messages from Slack:Outgoing WebHooks integrations, then feeds it into Lita.
+**lita-slack-handler** is a handler for [Lita](https://github.com/jimmycuadra/lita) that allows you to use the robot with [Slack](https://slack.com/). This handler complements [lita-slack](https://github.com/kenjij/lita-slack) adapter gem.
+**lita-slack-handler** sets up an HTTP route to accept messages from Slack:Outgoing WebHooks integrations, then feeds it into Lita.
 This handler, otherwise, does nothing by itself; i.e., it does not produce any replies.
 
 ## Installation
