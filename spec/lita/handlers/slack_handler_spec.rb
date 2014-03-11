@@ -16,6 +16,7 @@ describe Lita::Handlers::SlackHandler, lita_handler: true do
 		before :each do
 		  Lita.config.handlers.slack_handler.webhook_token = "aN1NvAlIdDuMmYt0k3n"
 		  Lita.config.handlers.slack_handler.team_domain = "example"
+		  Lita.config.handlers.slack_handler.ignore_user_name = "lita"
 		end
 
 		describe "#config_valid?" do
@@ -43,6 +44,15 @@ describe Lita::Handlers::SlackHandler, lita_handler: true do
 				req['token'] = Lita.config.handlers.slack_handler.webhook_token
 				req['team_domain'] = 'my'
 				expect(subject.request_valid?(req)).to eql(false)
+			end
+		end
+
+		describe "#ignore?" do
+			it 'returns true when ignore_user_name matches user_name' do
+				req['token'] = Lita.config.handlers.slack_handler.webhook_token
+				req['team_domain'] = Lita.config.handlers.slack_handler.team_domain
+				req['user_name'] = 'lita'
+				expect(subject.ignore?(req)).to eql(true)
 			end
 		end
 	end

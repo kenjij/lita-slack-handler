@@ -11,8 +11,9 @@ module Lita
 				# Slack:Outgoing WebHook integration token
 				default.webhook_token = nil
 				default.team_domain = nil
+				default.ignore_user_name = nil
 			end
-			
+
 			def receive(req, res)
 				# For security, do not run with missing config
 				if not config_valid?
@@ -23,6 +24,12 @@ module Lita
 				# Validate request
 				if not request_valid?(req)
 					res.status = 403
+					return
+				end
+				# Ignore some requests
+				if ignore?(req)
+					log.debug "SlackHandler::receive ignoring request"
+					res.status = 200
 					return
 				end
 				res.status = 200
@@ -67,18 +74,27 @@ module Lita
 				return valid
 			end
 
+			def ignore?(req)
+				ignore = false
+				if !config.ignore_user_name.nil? && req['user_name'].eql?(config.ignore_user_name)
+					log.warn "SlackHandler: #{req['user_name']} matches ignore_user_name #{config.ignore_user_name}"
+					ignore = true
+				end
+				return ignore
+			end
+
 			#
 			# Accessor shortcuts
 			#
 			def log
 				Lita.logger
 			end
-			
+
 			def config
 				Lita.config.handlers.slack_handler
 			end
 		end
-	
+
 		Lita.register_handler(SlackHandler)
 	end
 end
