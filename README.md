@@ -34,6 +34,9 @@ Then, define the following attributes:
 * `webhook_token` (String) – Slack integration token.
 * `team_domain` (String) – Slack team domain; subdomain of slack.com.
 
+### Optional attributes
+* `ignore_user_name` - Either a string with a single user name, or an array of strings. - Messages from these users will be ignored by lita-slack-handler. The _slackbot_ user is ignored by default in order to prevent chat loops and does not need to be listed here.
+
 ### Example lita_config.rb
 
 ``` ruby
