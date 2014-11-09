@@ -61,6 +61,14 @@ describe Lita::Handlers::SlackHandler, lita_handler: true do
 				req['user_name'] = 'slackbot'
 				expect(subject.ignore?(req)).to eql(true)
 			end
+
+			it 'returns true when ignore_user_name is an array and contains the user_name' do
+				Lita.config.handlers.slack_handler.ignore_user_name = ["lita", "another_bot", "final_bot"]
+				req['token'] = Lita.config.handlers.slack_handler.webhook_token
+				req['team_domain'] = Lita.config.handlers.slack_handler.team_domain
+				req['user_name'] = 'another_bot'
+				expect(subject.ignore?(req)).to eql(true)
+			end
 		end
 	end
 
