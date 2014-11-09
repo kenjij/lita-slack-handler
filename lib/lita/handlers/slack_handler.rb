@@ -76,11 +76,15 @@ module Lita
 
 			def ignore?(req)
 				ignore = false
-				if !config.ignore_user_name.nil? && req['user_name'].eql?(config.ignore_user_name)
+				if ignored_users.include?(req['user_name'])
 					log.warn "SlackHandler: #{req['user_name']} matches ignore_user_name #{config.ignore_user_name}"
 					ignore = true
 				end
 				return ignore
+			end
+
+			def ignored_users
+			  ['slackbot', config.ignore_user_name].flatten.compact
 			end
 
 			#
